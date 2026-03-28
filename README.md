@@ -4,37 +4,47 @@
 
 This project implements a machine learning-based system for detecting phishing URLs. It is an academic project for the Machine Learning Sessional course at MIST (Military Institute of Science and Technology).
 
-The project involves data preprocessing, exploratory data analysis (EDA), feature selection using mutual information, model training with various algorithms including Linear Regression, XGBoost, Random Forest, AdaBoost, and Decision Tree, and comprehensive evaluation using cross-validation, confusion matrices, ROC curves, and feature importance analysis.
+The project involves data preprocessing, exploratory data analysis (EDA), feature selection using mutual information, handling class imbalance using different techniques, model training with various algorithms including Logistic Regression, XGBoost, Random Forest, AdaBoost, and Decision Tree, and comprehensive evaluation using cross-validation, confusion matrices, ROC curves, and feature importance analysis.
 
 This implementation is based on a research paper on phishing URL detection using machine learning techniques.
 
 ## Main Files
 
-- **FINAL_code.ipynb**: The main Jupyter notebook containing all the code for data loading, preprocessing, modeling, and evaluation.
+- **FINAL_code.ipynb**: The original Jupyter notebook containing the ML pipeline, but with a data leakage issue (feature selection performed before train-test split).
+- **FINAL_code_with_class_imbalance_fix.ipynb**: The improved Jupyter notebook that fixes the ML pipeline by performing train-test split before mutual information feature selection to prevent data leakage, and handles class imbalance using SMOTE, ADASYN, or SMOTE Tomek (selecting the best based on performance).
 - **final_dataset.csv**: The dataset used for training and testing the models.
-- **A_Machine_Learning_Algorithms_for_Detecting_Phishing.pdf**: The research paper on phishing URL detection
+- **A_Machine_Learning_Algorithms_for_Detecting_Phishing.pdf**: The research paper on phishing URL detection.
 
 ## Requirements
 
 - Python 3.x
-- Libraries: pandas, numpy, matplotlib, seaborn, scikit-learn, xgboost, ydata-profiling
+- Libraries: pandas, numpy, matplotlib, seaborn, scikit-learn, xgboost, ydata-profiling, imbalanced-learn
 
 ## Installation
 
 1. Ensure Python 3.x is installed.
 2. Install the required libraries using pip:
    ```
-   pip install pandas numpy matplotlib seaborn scikit-learn xgboost ydata-profiling
+   pip install pandas numpy matplotlib seaborn scikit-learn xgboost ydata-profiling imbalanced-learn
    ```
 
 ## Usage
 
-1. Open `FINAL_code.ipynb` in Jupyter Notebook or Jupyter Lab.
-2. Run the cells in order to execute the entire pipeline from data loading to model evaluation.
+1. For the original pipeline: Open `FINAL_code.ipynb` in Jupyter Notebook or Jupyter Lab and run the cells.
+2. For the improved pipeline: Open `FINAL_code_with_class_imbalance_fix.ipynb` in Jupyter Notebook or Jupyter Lab and run the cells. This version includes imbalance handling and prevents data leakage.
 
 ## Results
 
-The notebook evaluates multiple models and provides visualizations of performance metrics, including accuracy, confusion matrices, ROC curves, and feature importances.
+Both notebooks evaluate multiple models (Logistic Regression, Decision Tree, Random Forest, AdaBoost, XGBoost) and provide visualizations of performance metrics, including accuracy, confusion matrices, ROC curves, and feature importances.
+
+### FINAL_code.ipynb (Original)
+- **Cross-Validation Accuracy Distribution**: The boxplot shows the distribution of 5-fold CV accuracies for each model. Due to data leakage (feature selection on the entire dataset before splitting), the results may be overly optimistic. Typically, Random Forest shows the highest median CV accuracy, making it the best model in this setup.
+
+### FINAL_code_with_class_imbalance_fix.ipynb (Improved)
+- **Key Improvements**: Prevents data leakage by splitting data first, selects top 24 features via mutual information on training data, and applies the best class imbalance technique (SMOTE Tomek) based on test accuracy comparison.
+- **Cross-Validation Accuracy Distribution**: The boxplot on the resampled training data provides a more realistic estimate. After handling imbalance, models like XGBoost or Random Forest often achieve the highest median CV accuracy (around 0.92-0.96), with XGBoost typically performing best due to its robustness to imbalance and feature interactions.
+
+Overall, the improved notebook yields more reliable and generalizable results, with XGBoost as the top-performing model in both files, but with slightly lower (more realistic) accuracies in the fixed version.
 
 ## Academic Information
 
