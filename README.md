@@ -48,7 +48,7 @@ Overall, the improved notebook yields more reliable and generalizable results, w
 
 ## Academic Information
 
-This is a project submitted for the Machine Learning Sessional course at MIST University.
+This is a project submitted for the Machine Learning Sessional course at MIST.
 
 ## License
 
