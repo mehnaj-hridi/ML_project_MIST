@@ -38,13 +38,13 @@ This implementation is based on a research paper on phishing URL detection using
 Both notebooks evaluate multiple models (Logistic Regression, Decision Tree, Random Forest, AdaBoost, XGBoost) and provide visualizations of performance metrics, including accuracy, confusion matrices, ROC curves, and feature importances.
 
 ### FINAL_code.ipynb (Original)
-- **Cross-Validation Accuracy Distribution**: The boxplot shows the distribution of 5-fold CV accuracies for each model. Due to data leakage (feature selection on the entire dataset before splitting), the results may be overly optimistic. Typically, Random Forest shows the highest median CV accuracy, making it the best model in this setup.
+- **Cross-Validation Accuracy Distribution**: The boxplot illustrates the distribution of 5-fold cross-validation accuracies for each model. Random Forest achieves the highest median accuracy, followed closely by XGBoost, indicating strong predictive performance. However, the results exhibit relatively high accuracy across all models due to data leakage, as feature selection was performed on the entire dataset before splitting. This leads to overly optimistic estimates of model performance and reduced reliability. Additionally, models like Decision Tree show higher variance, suggesting instability across folds, while Logistic Regression and AdaBoost demonstrate more consistent but comparatively lower performance. Overall, although Random Forest appears to be the best model in this setup, the evaluation is biased and may not reflect true generalization ability.
 
 ### FINAL_code_with_class_imbalance_fix.ipynb (Improved)
 - **Key Improvements**: Prevents data leakage by splitting data first, selects top 24 features via mutual information on training data, and applies the best class imbalance technique (SMOTE Tomek) based on test accuracy comparison.
-- **Cross-Validation Accuracy Distribution**: The boxplot on the resampled training data provides a more realistic estimate. After handling imbalance, models like XGBoost or Random Forest often achieve the highest median CV accuracy (around 0.92-0.96), with XGBoost typically performing best due to its robustness to imbalance and feature interactions.
+- **Cross-Validation Accuracy Distribution**: The boxplot on the resampled training data provides a more realistic and unbiased estimate of model performance. Compared to the original setup, the accuracy scores are slightly lower but more consistent, indicating better generalization. Random Forest achieves the highest median accuracy with a tight distribution, demonstrating both strong performance and stability across folds. XGBoost follows closely as the second-best model, while Decision Tree shows comparatively higher variance, suggesting less stable performance. Logistic Regression and AdaBoost remain consistent but underperform relative to ensemble methods.
 
-Overall, the improved notebook yields more reliable and generalizable results, with XGBoost as the top-performing model in both files, but with slightly lower (more realistic) accuracies in the fixed version.
+Overall, the improved notebook yields more reliable and generalizable results, with Random Forest as the top-performing model in both files.
 
 ## Academic Information
 
